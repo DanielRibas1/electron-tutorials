@@ -1,4 +1,5 @@
 const electron = require('electron')
+const path = require('path')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
@@ -12,7 +13,8 @@ function creatwWindow () {
         minWidth: 1281, 
         minHeight: 800,
         backgroundColor: '#312450',
-        show: false
+        show: false,
+        icon: path.join(__dirname, 'assets/icons/png/64x64.png')
         })
     mainWindow.loadURL(`file://${__dirname}/index.html`)
     mainWindow.webContents.openDevTools()
