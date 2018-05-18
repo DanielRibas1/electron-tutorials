@@ -12,7 +12,7 @@ const BrowserWindow = electron.BrowserWindow
 
 let mainWindow
 
-function creatwWindow () {
+function createWindow () {
     mainWindow = new BrowserWindow({ 
         frame: false, 
         width: 1281, 
@@ -24,16 +24,19 @@ function creatwWindow () {
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
         })
     mainWindow.loadURL(`file://${__dirname}/index.html`)
-    mainWindow.webContents.openDevTools()
+    //mainWindow.webContents.openDevTools()
     mainWindow.on('closed', function () {
         mainWindow = null
-    })
+    })    
+
     mainWindow.once('ready-to-show', () => {
         mainWindow.show()
     })
+    
+    require('./menu/mainmenu')
 }
 
-app.on('ready', creatwWindow)
+app.on('ready', createWindow)
 
 app.on('window-all-closed', function () {
     if (process.platform != 'darwin') {
