@@ -1,3 +1,5 @@
+var i18n = new (require('../../translations/i18n'))
+
 window.localization = window.localization || {},
     function (n) {
         localization.translate = {

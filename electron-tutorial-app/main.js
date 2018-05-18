@@ -6,6 +6,7 @@ if (setupEvents.handleSquirrelEvent()) {
 }
 
 const electron = require('electron')
+const { ipcMain } = require('electron')
 const path = require('path')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -22,19 +23,44 @@ function createWindow () {
         backgroundColor: '#312450',
         show: false,
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
-        })
-    mainWindow.loadURL(`file://${__dirname}/index.html`)
-    //mainWindow.webContents.openDevTools()
-    mainWindow.on('closed', function () {
-        mainWindow = null
     })    
+        
+    mainWindow.loadURL(`file://${__dirname}/index.html`)   
+
+    mainWindow.webContents.openDevTools()
 
     mainWindow.once('ready-to-show', () => {
         mainWindow.show()
     })
+
+    mainWindow.on('closed', function () {
+        mainWindow = null
+    })    
+
+    secondWindow = new BrowserWindow({
+        frame: false,
+        width: 800,
+        height: 600,
+        minWidth: 800,
+        minHeight: 600,
+        backgroundColor: '#312450',
+        show: false,
+        icon: path.join(__dirname, 'assets/icons/png/64x64.png'),
+        parent: mainWindow
+    })
+
+    secondWindow.loadURL(`file://${__dirname}/windows/ipcwindow.html`)
     
     require('./menu/mainmenu')
 }
+
+ipcMain.on('open-second-window', (event, arg) => {
+    secondWindow.show()
+})
+
+ipcMain.on('close-second-window', (event, arg) => {
+    secondWindow.hide()
+})
 
 app.on('ready', createWindow)
 

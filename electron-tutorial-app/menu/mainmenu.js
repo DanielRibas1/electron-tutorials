@@ -150,6 +150,4 @@ if (process.platform === 'darwin') {
 }
 
 const menu = Menu.buildFromTemplate(template)
-console.log(Menu.getApplicationMenu())
 Menu.setApplicationMenu(menu)
-console.log(Menu.getApplicationMenu())
